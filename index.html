@@ -45,7 +45,7 @@
       </datalist>
 
       <label for="quantity">Number of Packages</label>
-      <input type="number" id="quantity" name="quantity" min="1" value="1" required />
+      <input type="number" id="quantity" name="quantity" min="1" value="1" required placeholder="e.g., 1" />
 
       <div id="packages-container"></div>
 
@@ -53,41 +53,41 @@
       <div class="row">
         <div class="field">
           <label for="pickupStreet">Street Address</label>
-          <input type="text" id="pickupStreet" name="pickupStreet" required />
+          <input type="text" id="pickupStreet" name="pickupStreet" required placeholder="e.g., 123 Elm Street" />
         </div>
       </div>
       <div class="row">
         <div class="field">
           <label for="pickupPostal">Postal Code</label>
-          <input type="text" id="pickupPostal" name="pickupPostal" required />
+          <input type="text" id="pickupPostal" name="pickupPostal" required placeholder="e.g., 28001" />
         </div>
         <div class="field">
           <label for="pickupCity">City</label>
-          <input type="text" id="pickupCity" name="pickupCity" required />
+          <input type="text" id="pickupCity" name="pickupCity" required placeholder="e.g., Madrid" />
         </div>
         <div class="field">
           <label for="pickupCountry">Country</label>
-          <input type="text" id="pickupCountry" name="pickupCountry" required />
+          <input type="text" id="pickupCountry" name="pickupCountry" required placeholder="e.g., Spain" />
         </div>
       </div>
 
       <div class="row">
         <div class="field">
           <label for="contactPerson">Contact Person</label>
-          <input type="text" id="contactPerson" name="contactPerson" />
+          <input type="text" id="contactPerson" name="contactPerson" placeholder="e.g., John Doe" />
         </div>
         <div class="field">
           <label for="contactEmail">Contact Email</label>
-          <input type="email" id="contactEmail" name="contactEmail" />
+          <input type="email" id="contactEmail" name="contactEmail" placeholder="e.g., user@example.com" />
         </div>
         <div class="field">
           <label for="contactPhone">Contact Phone</label>
-          <input type="tel" id="contactPhone" name="contactPhone" />
+          <input type="tel" id="contactPhone" name="contactPhone" placeholder="e.g., +34 612345678" />
         </div>
       </div>
 
       <label for="deliveryAddress">Delivery Address</label>
-      <textarea id="deliveryAddress" name="deliveryAddress" rows="2" required>C. Miguel Faraday, 1, 28906 Getafe, Madrid</textarea>
+      <textarea id="deliveryAddress" name="deliveryAddress" rows="2" required placeholder="e.g., C. Miguel Faraday, 1, 28906 Getafe, Madrid">C. Miguel Faraday, 1, 28906 Getafe, Madrid</textarea>
 
       <button type="submit" id="sendBtn" disabled>Generate Email</button>
     </form>
@@ -111,15 +111,15 @@
         block.innerHTML = `
           <div class="field">
             <label for="ref-${i}">Non-Conformity Reference #${i}</label>
-            <input type="text" id="ref-${i}" name="ref-${i}" required />
+            <input type="text" id="ref-${i}" name="ref-${i}" required placeholder="e.g., NCR12345" />
           </div>
           <div class="field">
             <label for="size-${i}">Package Size #${i}</label>
-            <input type="text" id="size-${i}" name="size-${i}" required />
+            <input type="text" id="size-${i}" name="size-${i}" required placeholder="e.g., 50x30x20 cm" />
           </div>
           <div class="field">
             <label for="weight-${i}">Weight #${i} (kg)</label>
-            <input type="number" id="weight-${i}" name="weight-${i}" step="0.01" required />
+            <input type="number" id="weight-${i}" name="weight-${i}" step="0.01" required placeholder="e.g., 12.5" />
           </div>`;
         packagesContainer.appendChild(block);
       }
