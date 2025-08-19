@@ -79,6 +79,10 @@
       <!-- Contact Info -->
       <div class="row">
         <div class="field">
+          <label for="contactPerson">Contact Person</label>
+          <input type="text" id="contactPerson" name="contactPerson" placeholder="e.g., John Doe" />
+        </div>
+        <div class="field">
           <label for="contactEmail">Contact Email</label>
           <input type="email" id="contactEmail" name="contactEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" placeholder="e.g., user@example.com" />
         </div>
@@ -192,6 +196,8 @@
       const country = document.getElementById('pickupCountry').value.trim();
       lines.push(`Pickup Address: ${street}, ${postal} ${city}, ${country}`);
 
+      const contactPerson = document.getElementById('contactPerson').value.trim();
+      if (contactPerson) lines.push(`Contact Person: ${contactPerson}`);
       const emailVal = emailInput.value.trim();
       const phoneVal = phoneInput.value.trim();
       if (emailVal) lines.push(`Contact Email: ${emailVal}`);
