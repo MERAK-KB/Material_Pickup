@@ -18,6 +18,7 @@
     .row .field { flex: 1; display: flex; flex-direction: column; }
     button { padding: 0.75rem; background-color: #0073e6; color: white; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; }
     button:disabled { background-color: #999; cursor: not-allowed; }
+    .note { font-size: 0.8rem; color: #999; margin-top: -0.5rem; margin-bottom: 1rem; }
   </style>
 </head>
 <body>
@@ -86,7 +87,8 @@
         </div>
       </div>
 
-      <label for="deliveryAddress">Delivery Address</label>
+      <label for="deliveryAddress">Delivery address for analysis and repair</label>
+      <div class="note">Do not modify unless it is necessary</div>
       <textarea id="deliveryAddress" name="deliveryAddress" rows="2" required placeholder="e.g., C. Miguel Faraday, 1, 28906 Getafe, Madrid">C. Miguel Faraday, 1, 28906 Getafe, Madrid</textarea>
 
       <button type="submit" id="sendBtn" disabled>Generate Email</button>
@@ -197,3 +199,4 @@
   </script>
 </body>
 </html>
+
