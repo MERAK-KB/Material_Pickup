@@ -180,6 +180,9 @@
       const delivery = document.getElementById('deliveryAddress').value.trim();
       lines.push(`Delivery Address: ${delivery}`);
 
+      const returnAddr = document.getElementById('returnAddress').value.trim();
+      if (returnAddr) lines.push(`Return Address: ${returnAddr}`);
+
       lines.push("");
       lines.push("-------------------------------");
       lines.push("**DISCLAIMER: DO NOT FORGET TO ATTACH THE NON-CONFORMANCE PDF(S).**");
