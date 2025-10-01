@@ -38,6 +38,7 @@
     <form id="pickup-form">
       <label for="division">Division</label>
       <select id="division" name="division" required>
+        <option value="" disabled selected>Select a division</option>
         <option value="HVAC">HVAC</option>
         <option value="Brakes">Brakes</option>
       </select>
@@ -209,15 +210,14 @@
       return { href };
     }
 
+    // confirmation popup before opening email
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const confirmMsg = [
         'DISCLAIMER: DO NOT FORGET TO ATTACH THE NON-CONFORMANCE PDF(S).',
         'For shipments outside the European Union, please also attach the packing list and the invoice document.',
         'IMPORTANT: If the required documentation is not attached, the pickup cannot be processed.'
-      ].join('
-
-');
+      ].join('\n\n');
 
       if (!window.confirm(confirmMsg)) return;
 
