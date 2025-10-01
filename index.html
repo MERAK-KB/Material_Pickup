@@ -133,6 +133,12 @@
             <input type="number" id="weight-${i}" name="weight-${i}" step="0.01" required placeholder="e.g., 12.5" />
           </div>`;
         packagesContainer.appendChild(block);
+
+        // Ensure commas are replaced by dashes in reference fields
+        const refInput = block.querySelector(`#ref-${i}`);
+        refInput.addEventListener('input', () => {
+          refInput.value = refInput.value.replace(/,/g, '-');
+        });
       }
     }
 
@@ -164,7 +170,9 @@
 
       const pkgCount = parseInt(qtyInput.value, 10);
       for (let i = 1; i <= pkgCount; i++) {
-        const refRaw = document.getElementById(`ref-${i}`).value.trim();
+        let refRaw = document.getElementById(`ref-${i}`).value.trim();
+        // Replace commas with dashes in case any slipped through
+        refRaw = refRaw.replace(/,/g, '-');
         const size = document.getElementById(`size-${i}`).value.trim();
         const weight = document.getElementById(`weight-${i}`).value.trim();
 
