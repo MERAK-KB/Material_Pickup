@@ -226,6 +226,10 @@
     // confirmation popup before opening email
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (!form.checkValidity()) {
+        alert('Please fill in all required fields before submitting.');
+        return;
+      }
       const confirmMsg = [
         'DISCLAIMER: DO NOT FORGET TO ATTACH THE NON-CONFORMANCE PDF(S).',
         'For shipments outside the European Union, please also attach the packing list and the invoice document.',
