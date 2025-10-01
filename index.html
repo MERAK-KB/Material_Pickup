@@ -13,7 +13,7 @@
     .instructions ul { margin: 0; padding-left: 1.2rem; }
     form { display: flex; flex-direction: column; }
     label { margin-bottom: 0.25rem; color: #555; font-size: 0.9rem; }
-    input, textarea { width: 100%; margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
+    input, textarea, select { width: 100%; margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
     .row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
     .row .field { flex: 1; display: flex; flex-direction: column; }
     button { padding: 0.75rem; background-color: #0073e6; color: white; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; }
@@ -36,6 +36,12 @@
     </div>
 
     <form id="pickup-form">
+      <label for="division">Division</label>
+      <select id="division" name="division" required>
+        <option value="HVAC">HVAC</option>
+        <option value="Brakes">Brakes</option>
+      </select>
+
       <label for="customerName">Customer Name</label>
       <input type="text" id="customerName" name="customerName" required list="customerOptions" placeholder="e.g., Alstom, CAF, Stadler, Siemens" />
       <datalist id="customerOptions">
@@ -105,8 +111,7 @@
     const packagesContainer = document.getElementById('packages-container');
     const emailInput = document.getElementById('contactEmail');
     const phoneInput = document.getElementById('contactPhone');
-
-    const MAIL_TO = 'ncrs@merak-hvac.com';
+    const divisionInput = document.getElementById('division');
 
     function renderPackages(count) {
       packagesContainer.innerHTML = '';
@@ -147,6 +152,8 @@
       const lines = [];
       const subjectRefs = [];
 
+      const division = divisionInput.value;
+      lines.push(`Division: ${division}`);
       lines.push(`Customer Name: ${document.getElementById('customerName').value.trim()}`);
 
       const pkgCount = parseInt(qtyInput.value, 10);
@@ -187,18 +194,33 @@
       lines.push("-------------------------------");
       lines.push("**DISCLAIMER: DO NOT FORGET TO ATTACH THE NON-CONFORMANCE PDF(S).**");
       lines.push("**FOR SHIPMENTS OUTSIDE THE EUROPEAN UNION, PLEASE ALSO ATTACH THE PACKING LIST AND THE INVOICE DOCUMENT.**");
+      lines.push("**IMPORTANT:** If the required documentation is not attached, the pickup cannot be processed.");
 
       let subject = 'Pickup Request';
       const cleanRefs = subjectRefs.filter(r => r && r.length > 0);
       if (cleanRefs.length > 0) subject += ' - ' + cleanRefs.join(' - ');
 
       const body = lines.join('\r\n');
-      const href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      let mailTo = 'ncrs@merak-hvac.com';
+      if (division === 'Brakes') {
+        mailTo = 'ncrs-frenos.RESMAD@knorr-bremse.com';
+      }
+      const href = `mailto:${mailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       return { href };
     }
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const confirmMsg = [
+        'DISCLAIMER: DO NOT FORGET TO ATTACH THE NON-CONFORMANCE PDF(S).',
+        'For shipments outside the European Union, please also attach the packing list and the invoice document.',
+        'IMPORTANT: If the required documentation is not attached, the pickup cannot be processed.'
+      ].join('
+
+');
+
+      if (!window.confirm(confirmMsg)) return;
+
       const { href } = buildMailto();
       window.location.href = href;
     });
