@@ -141,13 +141,18 @@
     qtyInput.addEventListener('change', () => {
       const val = parseInt(qtyInput.value, 10);
       if (val >= 1) renderPackages(val);
+      checkFormValidity();
     });
 
     form.addEventListener('input', () => {
+      checkFormValidity();
+    });
+
+    function checkFormValidity() {
       const isValid = form.checkValidity();
       const hasContact = emailInput.value.trim() || phoneInput.value.trim();
       sendBtn.disabled = !(isValid && hasContact);
-    });
+    }
 
     function buildMailto() {
       const lines = [];
@@ -204,7 +209,7 @@
       const body = lines.join('\r\n');
       let mailTo = 'ncrs@merak-hvac.com';
       if (division === 'Brakes') {
-        mailTo = 'ncrs-frenos.RESMAD@knorr-bremse.com';
+        mailTo = 'ncrs-frenos.RESMAD@merak-hvac.com';
       }
       const href = `mailto:${mailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       return { href };
