@@ -82,15 +82,15 @@
       <div class="row">
         <div class="field">
           <label for="contactPerson">Contact Person</label>
-          <input type="text" id="contactPerson" name="contactPerson" placeholder="e.g., John Doe" />
+          <input type="text" id="contactPerson" name="contactPerson" required placeholder="e.g., John Doe" />
         </div>
         <div class="field">
           <label for="contactEmail">Contact Email</label>
-          <input type="email" id="contactEmail" name="contactEmail" placeholder="e.g., user@example.com" />
+          <input type="email" id="contactEmail" name="contactEmail" required placeholder="e.g., user@example.com" />
         </div>
         <div class="field">
           <label for="contactPhone">Contact Phone</label>
-          <input type="tel" id="contactPhone" name="contactPhone" placeholder="e.g., +34 612345678" />
+          <input type="tel" id="contactPhone" name="contactPhone" required placeholder="e.g., +34 612345678" />
         </div>
       </div>
 
@@ -99,7 +99,7 @@
       <textarea id="deliveryAddress" name="deliveryAddress" rows="2" required placeholder="e.g., C. Miguel Faraday, 1, 28906 Getafe, Madrid">C. Miguel Faraday, 1, 28906 Getafe, Madrid</textarea>
 
       <label for="returnAddress">Return shipping address (after repair/replacement)</label>
-      <textarea id="returnAddress" name="returnAddress" rows="2" placeholder="e.g., 456 Oak Avenue, 10001 New York, USA"></textarea>
+      <textarea id="returnAddress" name="returnAddress" rows="2" required placeholder="e.g., 456 Oak Avenue, 10001 New York, USA"></textarea>
 
       <button type="submit" id="sendBtn" disabled>Generate Email</button>
     </form>
@@ -138,6 +138,11 @@
         const refInput = block.querySelector(`#ref-${i}`);
         refInput.addEventListener('input', () => {
           refInput.value = refInput.value.replace(/,/g, '-');
+          checkFormValidity();
+        });
+
+        block.querySelectorAll('input').forEach(inp => {
+          inp.addEventListener('input', checkFormValidity);
         });
       }
     }
@@ -150,9 +155,8 @@
       checkFormValidity();
     });
 
-    form.addEventListener('input', () => {
-      checkFormValidity();
-    });
+    form.addEventListener('input', checkFormValidity);
+    divisionInput.addEventListener('change', checkFormValidity);
 
     function checkFormValidity() {
       const isValid = form.checkValidity();
@@ -171,7 +175,6 @@
       const pkgCount = parseInt(qtyInput.value, 10);
       for (let i = 1; i <= pkgCount; i++) {
         let refRaw = document.getElementById(`ref-${i}`).value.trim();
-        // Replace commas with dashes in case any slipped through
         refRaw = refRaw.replace(/,/g, '-');
         const size = document.getElementById(`size-${i}`).value.trim();
         const weight = document.getElementById(`weight-${i}`).value.trim();
@@ -192,7 +195,7 @@
       lines.push(`Pickup Address: ${street}, ${postal} ${city}, ${country}`);
 
       const contactPerson = document.getElementById('contactPerson').value.trim();
-      if (contactPerson) lines.push(`Contact Person: ${contactPerson}`);
+      lines.push(`Contact Person: ${contactPerson}`);
       const emailVal = emailInput.value.trim();
       const phoneVal = phoneInput.value.trim();
       if (emailVal) lines.push(`Contact Email: ${emailVal}`);
@@ -202,7 +205,7 @@
       lines.push(`Delivery Address: ${delivery}`);
 
       const returnAddr = document.getElementById('returnAddress').value.trim();
-      if (returnAddr) lines.push(`Return Address: ${returnAddr}`);
+      lines.push(`Return Address: ${returnAddr}`);
 
       lines.push("");
       lines.push("-------------------------------");
@@ -223,7 +226,6 @@
       return { href };
     }
 
-    // confirmation popup before opening email
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!form.checkValidity()) {
